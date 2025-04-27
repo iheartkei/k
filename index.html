@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>For My Love</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(to bottom right, #ffffff, #ffe6f0);
+      background-attachment: fixed;
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    .main-container {
+      width: 95%;
+      max-width: 1200px;
+      background: rgba(255, 255, 255, 0.8);
+      border: 40px solid transparent;
+      border-image: url('your-border-image.png') 40 stretch;
+      border-radius: 20px;
+      padding: 20px;
+      overflow: hidden;
+      margin: 30px auto;
+      box-shadow: 0 8px 30px rgba(255, 192, 203, 0.4);
+    }
+
+    .section {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin: 50px 0;
+      flex-wrap: wrap;
+    }
+
+    .section:nth-child(even) {
+      flex-direction: row-reverse;
+    }
+
+    .text {
+      flex: 1;
+      font-size: 1.8rem;
+      color: #ff99bb;
+      padding: 20px;
+    }
+
+    .image {
+      flex: 1;
+      padding: 20px;
+    }
+
+    .image img {
+      width: 100%;
+      height: auto;
+      border-radius: 20px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      object-fit: cover;
+    }
+
+    .divider {
+      text-align: center;
+      font-size: 2.2rem;
+      color: white;
+      background-color: rgba(255, 182, 193, 0.7);
+      padding: 15px;
+      margin-top: 50px;
+      margin-bottom: 30px;
+      border: 2px solid white;
+      border-radius: 15px;
+      letter-spacing: 2px;
+    }
+
+    .heart-container {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .heart-container img {
+      width: 100px;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+
+    .heart-container img:hover {
+      transform: scale(1.2);
+    }
+
+    /* Popup */
+    .popup {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0);
+      background: white;
+      padding: 20px;
+      border-radius: 20px;
+      box-shadow: 0 0 30px rgba(0,0,0,0.4);
+      transition: transform 0.4s ease;
+      z-index: 1000;
+    }
+
+    .popup img {
+      max-width: 90vw;
+      max-height: 80vh;
+      border-radius: 20px;
+    }
+
+    .popup.active {
+      transform: translate(-50%, -50%) scale(1);
+    }
+
+    .fade-background {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(255, 182, 193, 0.3);
+      backdrop-filter: blur(3px);
+      z-index: 900;
+      display: none;
+    }
+
+    .fade-background.active {
+      display: block;
+    }
+
+    /* Snowflakes */
+    .snowflake {
+      position: fixed;
+      top: -10px;
+      color: white;
+      font-size: 1.5rem;
+      user-select: none;
+      z-index: 500;
+      animation: fall linear infinite;
+    }
+
+    @keyframes fall {
+      0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(100vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="main-container">
+
+    <!-- Section 1 -->
+    <section class="section">
+      <div class="text">You are my everything, my cozy winter dream.</div>
+      <div class="image"><img src="your-image1.jpg" alt="Cute Moment 1"></div>
+    </section>
+
+    <!-- Section 2 -->
+    <section class="section">
+      <div class="text">Every snowy day is better with you by my side.</div>
+      <div class="image"><img src="your-image2.jpg" alt="Cute Moment 2"></div>
+    </section>
+
+    <!-- Section 3 -->
+    <section class="section">
+      <div class="text">I love you deeper than every snowflake falling down.</div>
+      <div class="image"><img src="your-image3.jpg" alt="Cute Moment 3"></div>
+    </section>
+
+    <!-- Divider -->
+    <div class="divider">
+      <b>I LOVE YOU</b>
+    </div>
+
+    <!-- Heart -->
+    <div class="heart-container">
+      <img src="heart.png" alt="Heart" id="heart">
+    </div>
+
+    <!-- Popup Image -->
+    <div id="fade" class="fade-background"></div>
+
+    <div id="popup" class="popup">
+      <img src="popup-image.jpg" alt="Special Moment">
+    </div>
+
+  </div>
+
+  <!-- Snowflakes -->
+  <script>
+    const heart = document.getElementById('heart');
+    const popup = document.getElementById('popup');
+    const fade = document.getElementById('fade');
+
+    heart.addEventListener('click', () => {
+      popup.classList.toggle('active');
+      fade.classList.toggle('active');
+    });
+
+    fade.addEventListener('click', () => {
+      popup.classList.remove('active');
+      fade.classList.remove('active');
+    });
+
+    // Snowflake generator
+    function createSnowflake() {
+      const snowflake = document.createElement('div');
+      snowflake.classList.add('snowflake');
+      snowflake.textContent = '❄';
+      snowflake.style.left = Math.random() * window.innerWidth + 'px';
+      snowflake.style.animationDuration = (5 + Math.random() * 5) + 's';
+      snowflake.style.opacity = Math.random();
+      snowflake.style.fontSize = (10 + Math.random() * 20) + 'px';
+      
+      document.body.appendChild(snowflake);
+
+      setTimeout(() => {
+        snowflake.remove();
+      }, 10000);
+    }
+
+    setInterval(createSnowflake, 300);
+  </script>
+
+</body>
+</html>
